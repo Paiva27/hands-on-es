@@ -1,0 +1,310 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <title id= "logo">Hands On </title>
+</head>
+<body class="grey lighten-3">
+
+    <p id = "cidade-atual" style= "display: none"></p>
+    <p id = "usuario-logado" style= "display: none"></p>
+
+  <!-- NAVBAR -->
+  <nav class="z-depth-0 grey lighten-4">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo">
+         <p style="width: 150px; margin-top: 1px;" class="black-text modal-trigger" onclick= home()>Hands On</p> 
+      </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-account">Conta</a>
+          </li>
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="grey-text" id="logout">Sair</a>
+          </li>
+          <li class="admin" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-create">Criar Guia</a>
+          </li>
+          <li class="logged-out" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-login">Entrar</a>
+          </li>
+          <li class="logged-out" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Cadastrar</a>
+          </li>
+        </span>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ADMIN ACTIONS -->
+  <form class="center-align admin-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
+    <input type="email" placeholder="User email" id="admin-email" required />
+    <button class="btn-small yellow darken-2 z-depth-0">Make admin</button>
+  </form>
+
+  <!-- SIGN UP MODAL -->
+  <div id="modal-signup" class="modal">
+    <div class="modal-content">
+      <h4>Cadastro </h4><br />
+      <form id="signup-form">
+        <div class="input-field">
+          <input type="email" id="signup-email" required />
+          <label for="signup-email">Email</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="signup-password" required />
+          <label for="signup-password">Senha</label>
+        </div>
+        <div class="input-field">
+          <input type="text" id="signup-name" required />
+          <label for="signup-name">Nome</label>
+        </div>
+        <div class="input-field">
+          <input type="date" id="signup-data" required />
+          <label for="signup-data">Data de nascimento</label>
+        </div>
+        
+        <div class="input-field">
+          <input type="text" id="signup-city" required />
+          <label for="signup-city">Cidade</label>
+        </div> 
+        <label><p>Você é um Cliente ou Prestador de Serviços?</p></label>
+  <select class="browser-default" id ="signup-select" onclick="prestaSelect();">
+    <option onclick="prestaSelect();" value="Cliente" for="signup-select">Cliente</option>
+    <option onclick="prestaSelect();" value="Prestador" for="signup-select" >Prestador</option>
+  </select> <br>
+      <div id = "prestador-ex" style="display: none">
+        <div class="input-field">
+          <textarea id="signup-bio" class="materialize-textarea" data-length="120"></textarea>
+          <label for="signup-bio">Textarea</label>
+      </div>
+  
+      <div class="input-field">
+        <input type="text" id="signup-tag"/>
+        <label for="signup-tags">Tags</label>
+      </div>   
+
+      <label><p>Selecione sua área de atuação</p></label>
+  <select  class="select" id ="signup-profissa">
+    <option value="Pedreiro" for="signup-profissa">Pedreiro</option>
+    <option value="Pintor" for="signup-profissa" >Pintor</option>
+    <option value="Bombeiro" for="signup-profissa" >Bombeiro</option>
+    <option value="Eletricista" for="signup-profissa" >Eletricista</option>
+  </select> <br>  
+
+
+  <div class="input-field">
+    <input type="text" id="signup-RG"/>
+    <label for="signup-RG">RG</label>
+  </div>   
+
+  <div class="input-field">
+    <input type="text" id="signup-CPF"/>
+    <label for="signup-CPF">CPF</label>
+  </div>   
+
+      <div class="input-field">
+        <input type="text" id="signup-telefone"/>
+        <label for="signup-telefone">Telefone</label>
+      </div>   
+      </div>
+      
+        <button class="btn red darken-2 z-depth-0">Cadastrar</button>
+        <p class="error pink-text center-align"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div id="modal-login" class="modal">
+    <div class="modal-content">
+      <h4>Entrar</h4><br />
+      <form id="login-form">
+        <div class="input-field">
+          <input type="email" id="login-email" required />
+          <label for="login-email">Email</label>
+        </div>
+        <div class="input-field">
+          <input type="password" id="login-password" required />
+          <label for="login-password">Senha</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Entrar</button>
+        <p class="error pink-text center-align"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ACCOUNT MODAL -->
+  <div id="modal-account" class="modal">
+    <div class="modal-content left-align">
+      <h4>Detalhes da conta</h4><br />
+      <div class="account-name"></div>
+      <div class="account-details"></div>
+      <div class="account-tags"></div>
+    </div>
+  </div>
+
+  <!-- CREATE GUIDE MODAL -->
+  <div id="modal-create" class="modal">
+    <div class="modal-content">
+      <h4>Criar guia</h4><br />
+      <form id="create-form">
+        <div class="input-field">
+          <input type="text" id="title" required>
+          <label for="title">Titulo do guia</label>
+        </div>
+        <div class="input-field">
+          <textarea id="content" class="materialize-textarea" required></textarea>
+          <label for="content">Conteúdo do guia</label>
+        </div>
+        <button class="btn yellow darken-2 z-depth-0">Criar</button>
+      </form>
+    </div>
+  </div>
+
+<div id = "div-inicio" >
+
+  <div class = "container "> 
+  <div class="row center-align" >
+      <div class="col s12 m4 l2"><p></p></div>
+      <div class="col s12 m4 l8"  style="margin: 80px auto">
+        <div class="card #e57373 red lighten-2 z-depth-5">
+          <div class="card-content white-text max-width:50px">
+            <span class="card-title center-align"><h3>Escolha sua cidade</h3>  </span><br>
+            
+            <form id = "cidade-form"  onmouseover="setTxt()">
+              <select id ="cidade-select"class="browser-default users style=margin:40px auto; max-width: 300px; display: none;" required>
+                <option value="" disabled selected>Escolha uma cidade...</option>
+              </select>
+            
+       </div>
+          <div class="card-action center-align" >
+              <button class="btn waves-effect waves-light center-align" type="submit" name="action">Procurar
+                </button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<br><br>
+  <div class = "container"> 
+    <div class="row">
+      <div class="col s4 ">
+        <div class="center promo promo-example">
+          <i class="large material-icons">search</i>
+          <h4>Procurou</h4>
+        </div>
+      </div>
+      <div class="col s4 ">
+        <div class="center promo promo-example ">
+          <i class="large material-icons">location_on</i>
+          <h4>Achou</h4>
+        </div>
+      </div>
+      <div class="col s4">
+        <div class="center promo promo-example">
+          <i class="large material-icons">build</i>
+          <h4>Consertou</h4>
+        </div>
+      </div>
+    </div></div>
+    <br><br>
+  </div>
+  <!-- GUIDE LIST -->
+  <div class="container" style="margin-top: 40px;">
+    <ul class="collapsible z-depth-0 guides" style="border: none;">
+    </ul>
+  </div>
+<!-- user by city LIST -->
+
+  <div id = "div-display"class="container " style="margin: 80px auto;display: none">
+    <div class="row">
+      <div class="col s12 m4 l2"></div>
+      <div class="col s12 m4 l8">
+        <div class="card #e57373 red lighten-2 z-depth-4">
+          <div class="card-content white-text">
+            <span class="card-title center-align"><h4>Procure especificamente o que você quer:</h4></span>
+            <div class="wrapper">
+              <form id = "form-procura">
+                <div class="input-field">
+                  <input id="search" type="search" required>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="card-action grey lighten-4  center-align">
+            <form id="select-procura">    
+                <label><h4>Selecione a área de atuação</h4></label>
+                <select class="select" id ="signup-profissa">
+                  <option value="" disabled selected for="signup-profissa">...</option>
+                  <option value="Pedreiro" for="signup-profissa">Pedreiro</option>
+                  <option value="Pintor" for="signup-profissa" >Pintor</option>
+                  <option value="Bombeiro" for="signup-profissa" >Bombeiro</option>
+                  <option value="Eletricista" for="signup-profissa" >Eletricista</option>
+                </select> <br>  
+                <div class = "center-align">
+                   <button class="btn waves-effect waves-light center-align" type="submit" name="action">Procurar
+                  </button> 
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <h3 class="grey-text center-align"> Prestadores encontrados na cidade:</h3><br><br>
+    <ul class="collapsible popout z-depth-0 usersbc" style="border: none;">
+    </p>
+  </div>
+            
+
+  <footer class="page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col  s12 ">
+            <p class="grey-text text-lighten-4 center-align">Trabalho final da dsiciplina de Engenharia de Software - Feito por Rafael Paiva e  Antonio Pedro</p>
+          </div>
+          
+      </div>
+    </footer>
+        
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase-functions.js"></script>
+  
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCgIu2x8ZqJePYLDcCSlpwClOEUjr7BGjI",
+    authDomain: "mat-rea.firebaseapp.com",
+    databaseURL: "https://mat-rea.firebaseio.com",
+    projectId: "mat-rea",
+    storageBucket: "mat-rea.appspot.com",
+    messagingSenderId: "520744489247",
+    appId: "1:520744489247:web:fe3c7794f227a3d389202a",
+    measurementId: "G-461V2E8LSH"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+   // make auth and firestore references
+   const auth = firebase.auth();
+    const db = firebase.firestore();
+    const functions = firebase.functions();
+
+    // update firestore settings
+    db.settings({ timestampsInSnapshots: true });
+</script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script src="scripts/index.js"></script>
+</body>
+</html>
